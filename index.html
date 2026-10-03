@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boshka Cafe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#2A1240;
+    --espresso-2:#43195C;
+    --cream:#FFF7E8;
+    --caramel:#FF8A3D;
+    --banana:#FFD23F;
+    --leaf:#3FDD8B;
+    --pink:#FF4FA0;
+    --sky:#3FC3FF;
+    --ink:#2B1230;
+  }
+
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--espresso);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    overflow-x:hidden;
+  }
+
+  body{
+    background:
+      radial-gradient(90% 60% at 15% 0%, rgba(255,138,61,0.45) 0%, transparent 55%),
+      radial-gradient(80% 55% at 100% 10%, rgba(63,195,255,0.35) 0%, transparent 55%),
+      radial-gradient(90% 70% at 50% 100%, rgba(63,221,139,0.30) 0%, transparent 60%),
+      radial-gradient(70% 50% at 90% 60%, rgba(255,79,160,0.28) 0%, transparent 55%),
+      linear-gradient(160deg, #33124D 0%, #2A1240 45%, #431447 100%);
+    background-size:140% 140%, 140% 140%, 140% 140%, 140% 140%, 100% 100%;
+    animation:driftBg 18s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ body{ animation:none; } }
+
+  @keyframes driftBg{
+    0%,100%{ background-position:0% 0%, 100% 0%, 50% 100%, 100% 60%, 0 0; }
+    50%{ background-position:10% 10%, 90% 15%, 45% 90%, 85% 55%, 0 0; }
+  }
+
+  .page{
+    max-width:480px;
+    margin:0 auto;
+    min-height:100vh;
+    position:relative;
+    padding-bottom:48px;
+  }
+
+  /* ---------- decorative jungle leaves ---------- */
+  .leaf{
+    position:absolute;
+    opacity:0.5;
+    z-index:0;
+  }
+  .leaf svg{ display:block; width:100%; height:100%; }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    padding:56px 24px 40px;
+    text-align:center;
+    overflow:hidden;
+  }
+
+  .steam{
+    position:absolute;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(255,210,63,0.18) 0, transparent 40%),
+      radial-gradient(circle at 80% 10%, rgba(63,221,139,0.20) 0, transparent 45%),
+      radial-gradient(circle at 50% 80%, rgba(255,79,160,0.16) 0, transparent 50%);
+    pointer-events:none;
+  }
+
+  .mascot-wrap{
+    position:relative;
+    width:168px;
+    height:168px;
+    margin:0 auto 18px;
+  }
+
+  .mascot-ring{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:conic-gradient(from 220deg, var(--banana), var(--caramel), var(--pink), var(--sky), var(--leaf), var(--banana));
+    padding:5px;
+    animation:spin 14s linear infinite;
+    filter:drop-shadow(0 0 26px rgba(255,138,61,0.55));
+  }
+  @media (prefers-reduced-motion: reduce){ .mascot-ring{ animation:none; } }
+
+  .mascot-ring::before{
+    content:"";
+    position:absolute;
+    inset:5px;
+    border-radius:50%;
+    background:var(--espresso-2);
+  }
+
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .mascot-face{
+    position:absolute;
+    inset:14px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #5A2270, var(--espresso-2));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+
+  .mascot-face svg{ width:82%; height:82%; }
+
+  .eyebrow{
+    display:inline-block;
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--banana);
+    margin-bottom:10px;
+    text-shadow:0 0 18px rgba(255,210,63,0.5);
+  }
+
+  h1{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:800;
+    font-size:46px;
+    line-height:0.95;
+    margin:0 0 10px;
+    letter-spacing:-0.01em;
+    background:linear-gradient(90deg, var(--banana) 0%, var(--caramel) 35%, var(--pink) 70%, var(--sky) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 2px 18px rgba(255,79,160,0.25));
+  }
+
+  .tagline{
+    font-size:15px;
+    color:#F0E0FF;
+    margin:0;
+    font-weight:500;
+  }
+
+  /* ---------- links ---------- */
+  .links{
+    position:relative;
+    z-index:1;
+    padding:8px 20px 0;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .card{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:rgba(255,255,255,0.07);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:18px;
+    padding:16px 18px;
+    text-decoration:none;
+    color:var(--cream);
+    transition:transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease;
+    box-shadow:0 6px 20px rgba(0,0,0,0.18);
+  }
+  .card:active{ transform:scale(0.97); }
+  @media (hover:hover){
+    .card:hover{ background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.3); }
+  }
+
+  .call{ box-shadow:0 6px 24px rgba(255,210,63,0.20); }
+  .whats{ box-shadow:0 6px 24px rgba(60,187,106,0.20); }
+  .menu{ box-shadow:0 6px 24px rgba(255,138,61,0.20); }
+  .map{ box-shadow:0 6px 24px rgba(63,221,139,0.20); }
+  .ig{ box-shadow:0 6px 24px rgba(238,42,123,0.20); }
+  .fb{ box-shadow:0 6px 24px rgba(24,119,242,0.22); }
+  .tt{ box-shadow:0 6px 24px rgba(63,195,255,0.18); }
+
+  .card .icon{
+    flex:none;
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card .icon svg{ width:22px; height:22px; }
+
+  .card .txt{ flex:1; min-width:0; }
+  .card .label{
+    font-family:'Baloo 2', sans-serif;
+    font-weight:700;
+    font-size:16.5px;
+    line-height:1.15;
+  }
+  .card .sub{
+    font-size:12.5px;
+    color:#E4D4F5;
+    margin-top:2px;
+  }
+  .card .chev{ flex:none; opacity:0.5; }
+
+  .call .icon{ background:linear-gradient(135deg, var(--banana), var(--caramel)); color:var(--ink); }
+  .whats .icon{ background:linear-gradient(135deg, #4FE38B, #1FAE5F); color:#fff; }
+  .menu .icon{ background:linear-gradient(135deg, var(--caramel), var(--pink)); color:#fff; }
+  .map .icon{ background:linear-gradient(135deg, var(--leaf), var(--sky)); color:#0E3A2B; }
+  .ig .icon{ background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7); color:#fff; }
+  .fb .icon{ background:linear-gradient(135deg, #4FA8FF, #1877F2); color:#fff; }
+  .tt .icon{ background:linear-gradient(135deg, #2b2b2b, #000); color:var(--sky); }
+
+  .primary{
+    background:linear-gradient(120deg, var(--banana) 0%, var(--caramel) 100%);
+    border-color:transparent;
+  }
+  .primary .label, .primary .sub{ color:var(--ink); }
+  .primary .icon{ background:var(--ink); color:var(--banana); }
+  .primary .chev{ opacity:0.55; filter:none; }
+  @media (hover:hover){
+    .primary:hover{ filter:brightness(1.06); }
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    text-align:center;
+    margin-top:34px;
+    padding:0 24px;
+    color:#C9AEDD;
+    font-size:12px;
+    position:relative;
+    z-index:1;
+  }
+  footer .paw{
+    display:block;
+    margin:0 auto 8px;
+    opacity:0.7;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- decorative leaves -->
+  <div class="leaf" style="top:20px; left:-26px; width:90px; height:90px;">
+    <svg viewBox="0 0 100 100" fill="none"><path d="M10 90C10 50 40 10 90 10C90 50 60 90 10 90Z" fill="#3FDD8B"/></svg>
+  </div>
+  <div class="leaf" style="top:10px; right:-34px; width:110px; height:110px; transform:rotate(200deg);">
+    <svg viewBox="0 0 100 100" fill="none"><path d="M10 90C10 50 40 10 90 10C90 50 60 90 10 90Z" fill="#FF8A3D"/></svg>
+  </div>
+  <div class="leaf" style="top:220px; left:-20px; width:70px; height:70px; opacity:0.35; transform:rotate(60deg);">
+    <svg viewBox="0 0 100 100" fill="none"><path d="M10 90C10 50 40 10 90 10C90 50 60 90 10 90Z" fill="#FF4FA0"/></svg>
+  </div>
+
+  <div class="hero">
+    <div class="steam"></div>
+
+    <div class="mascot-wrap">
+      <div class="mascot-ring"></div>
+      <div class="mascot-face">
+        <!-- monkey mascot sipping coffee -->
+        <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="60" cy="66" rx="36" ry="34" fill="#8A5A38"/>
+          <ellipse cx="60" cy="70" rx="24" ry="22" fill="#E7C6A0"/>
+          <circle cx="24" cy="52" r="14" fill="#8A5A38"/>
+          <circle cx="96" cy="52" r="14" fill="#8A5A38"/>
+          <circle cx="24" cy="52" r="7" fill="#E7C6A0"/>
+          <circle cx="96" cy="52" r="7" fill="#E7C6A0"/>
+          <circle cx="46" cy="60" r="5.4" fill="#2B1B12"/>
+          <circle cx="74" cy="60" r="5.4" fill="#2B1B12"/>
+          <circle cx="47.6" cy="58.2" r="1.6" fill="#fff"/>
+          <circle cx="75.6" cy="58.2" r="1.6" fill="#fff"/>
+          <path d="M50 78C53 82 67 82 70 78" stroke="#2B1B12" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M40 46C44 40 76 40 80 46" stroke="#2B1B12" stroke-width="2.6" stroke-linecap="round" fill="none" opacity="0.55"/>
+          <!-- coffee cup -->
+          <rect x="68" y="80" width="26" height="20" rx="4" fill="#F2C14E"/>
+          <path d="M94 84h6a6 6 0 0 1 0 12h-6" stroke="#F2C14E" stroke-width="4" fill="none"/>
+          <path d="M74 76c1-4 6-4 7 0M84 76c1-4 6-4 7 0" stroke="#D8C6B4" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+        </svg>
+      </div>
+    </div>
+
+    <span class="eyebrow">Coffee &middot; Vibes &middot; No Rush</span>
+    <h1>Boshka<br>Cafe</h1>
+    <p class="tagline">relax . eat . drink . listen to your inner peace</p>
+  </div>
+
+  <div class="links">
+
+    <a class="card primary call" href="tel:+201067779492">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .5 1 1v3.4c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4.1c0-.6.5-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.3 1l-2.2 2.2Z" fill="currentColor"/></svg>
+      </span>
+      <span class="txt">
+        <span class="label">Call Boshka</span>
+        <span class="sub">+20 106 777 9492 — tap to dial</span>
+      </span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a class="card menu" href="https://m-boshka-shop.geideapos.net/9562be0c-e3f5-489e-89ac-6ff83eeef91c/shop?fbclid=IwVERDUAT36yJwZG9mAWZkaWQWUNCF0Ae31M8_a35ZWNMnnjZuTdMFfGV4dG4DYWVtAjEwAHNydGMGYXBwX2lkCjY2Mjg1NjgzNzkAAR7HsdpwKcibY0FSd3Q47p-sPbpbZyY8A0ckC-U6SbXfW8BdnTg_nwKZtfJLPw_aem_uoyGGDZxpLPWE4WUqlERCA" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 3h14l-1 6H6L5 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M6 9l1.2 10.2a2 2 0 0 0 2 1.8h5.6a2 2 0 0 0 2-1.8L18 9" stroke="currentColor" stroke-width="2"/><path d="M9.5 13h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </span>
+      <span class="txt">
+        <span class="label">Order &amp; Menu</span>
+        <span class="sub">Browse the full menu &amp; order</span>
+      </span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a class="card map" href="https://maps.app.goo.gl/cerV1ErHN5RZt3Yy8?g_st=ic" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s7-7.4 7-12.5A7 7 0 0 0 5 9.5C5 14.6 12 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.6" stroke="currentColor" stroke-width="2"/></svg>
+      </span>
+      <span class="txt">
+        <span class="label">Find Us</span>
+        <span class="sub">Get directions on Google Maps</span>
+      </span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a class="card ig" href="https://www.instagram.com/boshka_cafe2025?igsi=MWQzY2p6ejliaGdxZg==" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
+      </span>
+      <span class="txt">
+        <span class="label">Instagram</span>
+        <span class="sub">@boshka_cafe2025</span>
+      </span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a class="card fb" href="https://www.facebook.com/share/1DZdawZQXj/?mibextid=wwXIfr" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M15 8.5h2.5V5.2c-.4-.05-1.9-.2-3.2-.2-3.2 0-4.8 2-4.8 4.9V12H6.8v3.6h2.7V22h3.7v-6.4h3l.5-3.6h-3.5V10.3c0-1.1.3-1.8 1.8-1.8Z" fill="currentColor"/></svg>
+      </span>
+      <span class="txt">
+        <span class="label">Facebook</span>
+        <span class="sub">Follow our page</span>
+      </span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+    <a class="card tt" href="https://www.tiktok.com/@boshkawy?_r=1&_t=ZS-997r5c5uDki" target="_blank" rel="noopener">
+      <span class="icon">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M16.5 3c.4 2.2 2 3.7 4.2 3.9v3c-1.5 0-2.9-.4-4.2-1.3V15c0 3.3-2.4 5.7-5.5 5.7S5.5 18.3 5.5 15s2.4-5.7 5.5-5.7c.3 0 .7 0 1 .1v3.1c-.3-.1-.6-.2-1-.2-1.4 0-2.5 1.1-2.5 2.7s1.1 2.7 2.5 2.7 2.6-1.1 2.6-2.7V3h2.9Z" fill="currentColor"/></svg>
+      </span>
+      <span class="txt">
+        <span class="label">TikTok</span>
+        <span class="sub">@boshkawy</span>
+      </span>
+      <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+
+  </div>
+
+  <footer>
+    <svg class="paw" width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="16" r="4" fill="#C9AEDD"/><circle cx="6" cy="9" r="2.2" fill="#C9AEDD"/><circle cx="11" cy="6.5" r="2.2" fill="#C9AEDD"/><circle cx="16" cy="6.5" r="2.2" fill="#C9AEDD"/><circle cx="19.5" cy="10.5" r="2" fill="#C9AEDD"/></svg>
+    Boshka Cafe &middot; tap a card to open
+  </footer>
+
+</div>
+
+</body>
+</html>
